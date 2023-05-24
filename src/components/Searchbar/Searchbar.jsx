@@ -1,21 +1,35 @@
+import * as css from './Searchbar.styled'
+import { FaSearch } from 'react-icons/fa';
+import PropTypes from 'prop-types';
+
+export const Searchbar = ({ upQuery, fetchData }) => {
 
 
-export const Searchbar = () => {
+
     return (
-        <header className="searchbar">
-            <form className="form">
-                <button type="submit" className="button">
-                    <span className="button-label">Search</span>
-                </button>
+        <css.Searchbar>
+            <css.SearchForm onSubmit={(e) => { fetchData(); e.preventDefault(); } }>
+                <css.SearchFormButton type="submit">
+                    <FaSearch />
+                    <css.SearchFormButtonLabel>Search</css.SearchFormButtonLabel>
+                </css.SearchFormButton>
 
-                <input  
+                <css.SearchFormInput  
                     className="input"
                     type="text"
                     autoComplete="off"
                     autoFocus
                     placeholder="Search images and photos"
+                    onBlur={upQuery}
                 />
-            </form>
-        </header>
+            </css.SearchForm>
+        </css.Searchbar>
     )
 }
+
+
+
+Searchbar.propTypes = {
+    upQuery: PropTypes.func.isRequired,
+    fetchData: PropTypes.func.isRequired,
+};

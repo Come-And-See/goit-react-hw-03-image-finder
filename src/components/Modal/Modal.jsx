@@ -1,12 +1,22 @@
+import * as css from './Modal.styled'
+import PropTypes from 'prop-types';
+
+export const Modal = ({ imgUrl, closeModal }) => {
 
 
-export const Modal = () => {
     return (
-        <div className="overlay">
-            <div className="modal">
-                <img src="" alt="" />
-            </div>
-        </div>
+        <css.Overlay onClick={closeModal}>
+            <css.Modal>
+                <img src={imgUrl} alt="" />
+            </css.Modal>
+        </css.Overlay>
     )
 
 }
+
+
+
+Modal.propTypes = {
+    imgUrl: PropTypes.string.isRequired,
+    closeModal: PropTypes.func.isRequired,
+};
