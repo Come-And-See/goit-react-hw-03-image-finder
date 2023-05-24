@@ -1,5 +1,5 @@
 import { Triangle } from 'react-loader-spinner'
-import * as css from './loader.styled'
+import * as css from './Loader.styled'
 
 export const Loader = () => {
     return (
