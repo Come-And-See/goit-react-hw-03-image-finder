@@ -2,6 +2,9 @@ import { Triangle } from 'react-loader-spinner'
 import * as css from './loader.styled'
 
 
+
+
+
 export const Loader = () => {
     return (
         <css.Loader> <Triangle
