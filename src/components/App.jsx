@@ -15,6 +15,9 @@ export class App extends Component {
     largeImageURL: '',
     isLoading: false,
     page: 1,
+    total: 0,
+    isLoadMore: false
+
   }
 
   componentDidMount() {
@@ -48,19 +51,22 @@ export class App extends Component {
   fetchData = () => {
 
     this.setState({ isLoading: true })
-    const { query, page } = this.state;
+    const { query, page, total } = this.state;
     axios.defaults.baseURL = 'https://pixabay.com/api/'
     const KEY = '11680265-49a2c7c2ef17772c90d3b7b54'
 
-    // setTimeout(() => {
-    axios.get(`?key=${KEY}&q=${query}&image_type=photo&page=${page}&per_page=12`).then(response => {
-      this.setState(prevState => ({ img: [...prevState.img, ...response.data.hits], isLoading: false }));
-    })
-      .catch(error => {
-        console.log(error);
-        this.setState({ isLoading: false });
-      });
-    // }, 1000);
+    setTimeout(() => {
+      axios.get(`?key=${KEY}&q=${query}&image_type=photo&page=${page}&per_page=12`).then(response => {
+        this.setState(prevState => ({ img: [...prevState.img, ...response.data.hits], isLoading: false, total: prevState.total + response.data.hits.length }))
+        if (total >= response.data.totalHits) {
+          this.setState({ isLoadMore: true })
+        }
+      })
+        .catch(error => {
+          console.log(error);
+          this.setState({ isLoading: false });
+        });
+    }, 1000);
   }
 
   LoadMore = () => {
@@ -86,7 +92,7 @@ export class App extends Component {
 
   render() {
     const { upQuery, fetchData, openModal, closeModal, LoadMore } = this;
-    const { img, largeImageURL, isLoading, isModalOpen } = this.state;
+    const { img, largeImageURL, isLoading, isModalOpen, isLoadMore } = this.state;
     return (
       <css.App>
         <Searchbar upQuery={upQuery} fetchData={fetchData} />
@@ -94,7 +100,7 @@ export class App extends Component {
         <ImageGallery data={img} openModal={openModal}
           isModalOpen={isModalOpen} largeImageURL={largeImageURL} closeModal={closeModal} />
         {isLoading && <Loader />}
-        {img.length > 0 && <Button LoadMore={LoadMore} />}
+        {img.length > 0 && !isLoadMore && <Button LoadMore={LoadMore} />}
 
       </css.App>
     );
