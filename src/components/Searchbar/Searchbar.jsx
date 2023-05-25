@@ -20,7 +20,7 @@ export const Searchbar = ({ upQuery, fetchData }) => {
                     autoComplete="off"
                     autoFocus
                     placeholder="Search images and photos"
-                    onBlur={upQuery}
+                    onChange={upQuery}
                 />
             </css.SearchForm>
         </css.Searchbar>
