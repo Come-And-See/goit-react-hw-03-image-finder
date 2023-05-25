@@ -21,7 +21,15 @@ export class App extends Component {
     window.addEventListener('keydown', this.closeModal);
   }
 
+  componentDidUpdate(_, prevState) {
+    if (prevState.query !== this.state.query) {
+      return;
+    }
 
+    if (prevState.page !== this.state.page) {
+      this.fetchData();
+    }
+  }
   componentWillUnmount() {
     window.removeEventListener('keydown', this.closeModal);
 
@@ -38,28 +46,28 @@ export class App extends Component {
 
 
   fetchData = () => {
+
     this.setState({ isLoading: true })
     const { query, page } = this.state;
     axios.defaults.baseURL = 'https://pixabay.com/api/'
     const KEY = '11680265-49a2c7c2ef17772c90d3b7b54'
 
-    setTimeout(() => {
-      axios.get(`?key=${KEY}&q=${query}&image_type=photo&page=${page}&per_page=12`).then(response => {
-        this.setState(prevState => ({ img: [...prevState.img, ...response.data.hits], isLoading: false }));
-      })
-        .catch(error => {
-          console.log(error);
-          this.setState({ isLoading: false });
-        });
-    }, 1000);
+    // setTimeout(() => {
+    axios.get(`?key=${KEY}&q=${query}&image_type=photo&page=${page}&per_page=12`).then(response => {
+      this.setState(prevState => ({ img: [...prevState.img, ...response.data.hits], isLoading: false }));
+    })
+      .catch(error => {
+        console.log(error);
+        this.setState({ isLoading: false });
+      });
+    // }, 1000);
   }
 
   LoadMore = () => {
     this.setState(prevState => ({
       page: prevState.page + 1
-    }), () => {
-      this.fetchData();
-    });
+    }))
+
 
   }
 

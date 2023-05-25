@@ -8,7 +8,7 @@ export const Searchbar = ({ upQuery, fetchData }) => {
 
     return (
         <css.Searchbar>
-            <css.SearchForm onSubmit={(e) => { fetchData(); e.preventDefault(); } }>
+            <css.SearchForm onSubmit={(e) => { e.preventDefault(); fetchData() }}>
                 <css.SearchFormButton type="submit">
                     <FaSearch />
                     <css.SearchFormButtonLabel>Search</css.SearchFormButtonLabel>
