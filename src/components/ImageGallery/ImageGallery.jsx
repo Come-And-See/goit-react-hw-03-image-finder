@@ -23,9 +23,6 @@ ImageGallery.propTypes = {
             largeImageURL: PropTypes.string.isRequired,
         })
     ).isRequired,
-    openModal: PropTypes.func.isRequired,
-    isModalOpen: PropTypes.bool.isRequired,
-    largeImageURL: PropTypes.string.isRequired,
-    closeModal: PropTypes.func.isRequired,
+
 };
 

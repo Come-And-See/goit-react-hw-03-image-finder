@@ -1,17 +1,33 @@
+import React, { Component } from 'react';
 import * as css from './Modal.styled'
 import PropTypes from 'prop-types';
 
-export const Modal = ({ imgUrl, closeModal }) => {
+export class Modal extends Component {
 
+    componentDidMount() {
+        window.addEventListener('keydown', this.closeModal);
+    }
+    componentWillUnmount() {
+        window.removeEventListener('keydown', this.closeModal);
 
-    return (
-        <css.Overlay onClick={closeModal}>
-            <css.Modal>
-                <img src={imgUrl} alt="" />
-            </css.Modal>
-        </css.Overlay>
-    )
+    }
 
+    closeModal = (e) => {
+        if (e.target === e.currentTarget || e.code === "Escape") {
+            this.props.closeModal()
+        }
+    }
+
+    render() {
+        const { imgUrl } = this.props
+        return (
+            <css.Overlay onClick={this.closeModal}>
+                <css.Modal>
+                    <img src={imgUrl} alt="" />
+                </css.Modal>
+            </css.Overlay>
+        )
+    }
 }
 
 
